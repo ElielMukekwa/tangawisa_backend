@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Tangawisa | Accueil et telechargement</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { 100:"#ffedd5",300:"#fdba74",500:"#f97316",600:"#ea580c" } }, fontFamily: { display:["Space Grotesk","sans-serif"], body:["Manrope","sans-serif"] } } } };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-stone-950 font-body text-stone-100" style="background-image:radial-gradient(circle at top right, rgba(249,115,22,.16), transparent 26%)">
+  <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-6 flex flex-col gap-4 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-brand-100">Edition par page</p>
+        <h1 class="mt-3 font-display text-3xl font-bold text-white">Accueil et telechargement</h1>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a id="content-home-dashboard-link" href="/static/admin/dashboard.html" class="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-bold text-white">Dashboard</a>
+        <button id="save-button" type="button" class="inline-flex h-11 items-center justify-center rounded-full bg-brand-500 px-5 text-sm font-bold text-white">Enregistrer</button>
+      </div>
+    </header>
+
+    <div id="status-banner" class="mb-6 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-300">Chargement...</div>
+
+    <section class="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+      <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+        <div id="hero-badge" contenteditable="true" data-placeholder="Badge hero" class="editable editable-empty inline-flex rounded-full border border-brand-300/20 bg-brand-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+        <h2 id="hero-title" contenteditable="true" data-placeholder="Titre hero" class="editable editable-empty mt-5 font-display text-4xl font-bold text-white"></h2>
+        <p id="hero-description" contenteditable="true" data-placeholder="Description hero" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+        <div class="mt-6 rounded-[1.5rem] border border-white/10 bg-black/20 p-4">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-start">
+            <img id="hero-preview-admin-image" src="" alt="" class="h-44 w-full rounded-[1.25rem] object-cover bg-stone-900 lg:w-56">
+            <div class="flex-1">
+              <p class="text-xs uppercase tracking-[0.25em] text-brand-100">Image hero</p>
+              <p id="hero-image-url" class="mt-3 break-all text-sm text-stone-300"></p>
+              <input id="hero-image-upload" type="file" accept="image/*" class="hidden">
+              <button id="hero-image-upload-button" type="button" class="mt-4 inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-bold text-white">Uploader une image</button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+            <p class="text-xs uppercase tracking-[0.25em] text-brand-100">CTA principal</p>
+            <p id="hero-primary-cta" contenteditable="true" data-placeholder="CTA principal" class="editable editable-empty mt-3 text-lg font-bold text-white"></p>
+          </div>
+          <div class="rounded-2xl border border-white/10 bg-black/20 p-4">
+            <p class="text-xs uppercase tracking-[0.25em] text-brand-100">CTA secondaire</p>
+            <p id="hero-secondary-cta" contenteditable="true" data-placeholder="CTA secondaire" class="editable editable-empty mt-3 text-lg font-bold text-white"></p>
+          </div>
+        </div>
+        <div class="mt-8 flex items-center justify-between">
+          <h3 class="font-display text-xl font-bold text-white">Statistiques</h3>
+          <button id="add-stat-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+        </div>
+        <div id="stats-list" class="mt-4 grid gap-4 sm:grid-cols-3"></div>
+      </div>
+
+      <div class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-brand-500/20 to-white/5 p-6">
+        <p class="text-xs uppercase tracking-[0.25em] text-brand-100">Telechargement</p>
+        <div id="download-eyebrow" contenteditable="true" data-placeholder="Eyebrow download" class="editable editable-empty mt-4 text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+        <h2 id="download-title" contenteditable="true" data-placeholder="Titre download" class="editable editable-empty mt-4 font-display text-3xl font-bold text-white"></h2>
+        <p id="download-description" contenteditable="true" data-placeholder="Description download" class="editable editable-empty mt-4 text-sm leading-7 text-stone-300"></p>
+        <div class="mt-6 rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+          <p id="latest-version" contenteditable="true" data-placeholder="Version" class="editable editable-empty font-display text-2xl font-bold text-white"></p>
+          <p id="latest-date" contenteditable="true" data-placeholder="Date" class="editable editable-empty mt-3 text-sm text-stone-300"></p>
+          <p id="latest-size" contenteditable="true" data-placeholder="Taille" class="editable editable-empty mt-2 text-sm text-stone-300"></p>
+          <p id="latest-android" contenteditable="true" data-placeholder="Android minimum" class="editable editable-empty mt-2 text-sm text-stone-300"></p>
+          <p id="latest-changes" contenteditable="true" data-placeholder="Nouveautes" class="editable editable-empty mt-4 text-sm leading-7 text-stone-300"></p>
+        </div>
+        <div class="mt-6 flex items-center justify-between">
+          <h3 class="font-display text-xl font-bold text-white">Etapes</h3>
+          <button id="add-step-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+        </div>
+        <div id="steps-list" class="mt-4 grid gap-3"></div>
+      </div>
+    </section>
+    <section class="mt-6 rounded-[2rem] border border-white/10 bg-white/5 p-6">
+      <div class="flex items-center justify-between">
+        <h3 class="font-display text-xl font-bold text-white">Liens du footer</h3>
+        <button id="add-footer-primary-link-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter un lien</button>
+      </div>
+      <div id="footer-primary-links-list" class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+    </section>
+  </div>
+
+  <script src="js/site-admin.js?v=20260803-1"></script>
+  <script>
+    const isFileMode = window.location.protocol === "file:";
+    const adminBaseUrl = isFileMode ? siteAdmin.getBackendBaseUrl() : "";
+    const resolveAdminHref = (path) => isFileMode ? `${adminBaseUrl}${path}` : path;
+
+    document.getElementById("content-home-dashboard-link").href = resolveAdminHref("/static/admin/dashboard.html");
+
+    siteAdmin.requireAuth(resolveAdminHref("/static/admin/login.html"));
+    siteAdmin.mountEditableBase();
+    siteAdmin.mountHomeEditor();
+  </script>
+</body>
+</html>

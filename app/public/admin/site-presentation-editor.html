@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Tangawisa | Replique editable</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { 100:"#ffedd5",300:"#fdba74",500:"#f97316",600:"#ea580c" } }, fontFamily: { display:["Space Grotesk","sans-serif"], body:["Manrope","sans-serif"] } } } };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-stone-950 font-body text-stone-100">
+  <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="rounded-[2rem] border border-white/10 bg-white/5 p-8">
+      <p class="text-xs font-bold uppercase tracking-[0.35em] text-brand-100">Replique editable</p>
+      <h1 class="mt-4 font-display text-4xl font-bold text-white">Le mode replique editable reste disponible</h1>
+      <p class="mt-4 max-w-3xl text-base leading-8 text-stone-300">
+        Le nouveau back-office a ete decoupe en plusieurs pages avec une connexion dediee et une bibliotheque media.
+        Tu peux continuer a utiliser cette page si tu veux une vue globale, mais le workflow principal passe maintenant par `login`, `dashboard`, `content-home`, `content-pages` et `media-library`.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a id="editor-login-link" href="/static/admin/login.html" class="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-6 text-sm font-bold text-white">Aller a la connexion admin</a>
+        <a id="editor-dashboard-link" href="/static/admin/dashboard.html" class="inline-flex h-12 items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 text-sm font-bold text-white">Ouvrir le dashboard</a>
+      </div>
+    </div>
+  </div>
+  <script src="js/site-admin.js?v=20260803-1"></script>
+  <script>
+    const isFileMode = window.location.protocol === "file:";
+    const adminBaseUrl = isFileMode ? siteAdmin.getBackendBaseUrl() : "";
+    const resolveAdminHref = (path) => isFileMode ? `${adminBaseUrl}${path}` : path;
+
+    document.getElementById("editor-login-link").href = resolveAdminHref("/static/admin/login.html");
+    document.getElementById("editor-dashboard-link").href = resolveAdminHref("/static/admin/dashboard.html");
+  </script>
+</body>
+</html>

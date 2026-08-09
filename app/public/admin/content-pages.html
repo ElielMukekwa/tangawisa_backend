@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Tangawisa | Pages de contenu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { colors: { brand: { 100:"#ffedd5",300:"#fdba74",500:"#f97316",600:"#ea580c" } }, fontFamily: { display:["Space Grotesk","sans-serif"], body:["Manrope","sans-serif"] } } } };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-stone-950 font-body text-stone-100" style="background-image:radial-gradient(circle at top right, rgba(249,115,22,.16), transparent 26%)">
+  <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-6 flex flex-col gap-4 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-brand-100">Edition par page</p>
+        <h1 class="mt-3 font-display text-3xl font-bold text-white">Fonctionnalites, captures, FAQ, contact et nouveautés</h1>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a id="content-pages-dashboard-link" href="/static/admin/dashboard.html" class="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-bold text-white">Dashboard</a>
+        <button id="save-button" type="button" class="inline-flex h-11 items-center justify-center rounded-full bg-brand-500 px-5 text-sm font-bold text-white">Enregistrer</button>
+      </div>
+    </header>
+
+    <div id="status-banner" class="mb-6 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-300">Chargement...</div>
+
+    <section class="grid gap-6">
+      <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+        <div id="features-eyebrow" contenteditable="true" data-placeholder="Eyebrow fonctionnalités" class="editable editable-empty text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+        <h2 id="features-title" contenteditable="true" data-placeholder="Titre fonctionnalités" class="editable editable-empty mt-4 font-display text-4xl font-bold text-white"></h2>
+        <p id="features-description" contenteditable="true" data-placeholder="Description fonctionnalités" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+        <div class="mt-8 flex items-center justify-between">
+          <h3 class="font-display text-xl font-bold text-white">Cartes fonctionnalités</h3>
+          <button id="add-feature-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+        </div>
+        <div id="features-list" class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+      </div>
+
+      <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+        <div id="screenshots-eyebrow" contenteditable="true" data-placeholder="Eyebrow captures" class="editable editable-empty text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+        <h2 id="screenshots-title" contenteditable="true" data-placeholder="Titre captures" class="editable editable-empty mt-4 font-display text-4xl font-bold text-white"></h2>
+        <p id="screenshots-description" contenteditable="true" data-placeholder="Description captures" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+        <div class="mt-8 flex items-center justify-between">
+          <h3 class="font-display text-xl font-bold text-white">Galerie</h3>
+          <button id="add-screenshot-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+        </div>
+        <div id="screenshots-list" class="mt-4 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+      </div>
+
+      <div class="grid gap-6 xl:grid-cols-2">
+        <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+          <div id="updates-eyebrow" contenteditable="true" data-placeholder="Eyebrow nouveautés" class="editable editable-empty text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+          <h2 id="updates-title" contenteditable="true" data-placeholder="Titre nouveautés" class="editable editable-empty mt-4 font-display text-4xl font-bold text-white"></h2>
+          <p id="updates-description" contenteditable="true" data-placeholder="Description nouveautés" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+          <div class="mt-8 flex items-center justify-between">
+            <h3 class="font-display text-xl font-bold text-white">Articles</h3>
+            <button id="add-update-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+          </div>
+          <div id="updates-list" class="mt-4 grid gap-4"></div>
+        </div>
+
+        <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+          <div id="faq-eyebrow" contenteditable="true" data-placeholder="Eyebrow FAQ" class="editable editable-empty text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+          <h2 id="faq-title" contenteditable="true" data-placeholder="Titre FAQ" class="editable editable-empty mt-4 font-display text-4xl font-bold text-white"></h2>
+          <p id="faq-description" contenteditable="true" data-placeholder="Description FAQ" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+          <div class="mt-8 flex items-center justify-between">
+            <h3 class="font-display text-xl font-bold text-white">Questions</h3>
+            <button id="add-faq-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+          </div>
+          <div id="faq-list" class="mt-4 grid gap-4"></div>
+        </div>
+      </div>
+
+      <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+        <div id="contact-eyebrow" contenteditable="true" data-placeholder="Eyebrow contact" class="editable editable-empty text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+        <h2 id="contact-title" contenteditable="true" data-placeholder="Titre contact" class="editable editable-empty mt-4 font-display text-4xl font-bold text-white"></h2>
+        <p id="contact-description" contenteditable="true" data-placeholder="Description contact" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+        <div class="mt-8 flex items-center justify-between">
+          <h3 class="font-display text-xl font-bold text-white">Canaux de contact</h3>
+          <button id="add-contact-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+        </div>
+        <div id="contact-list" class="mt-4 grid gap-4 md:grid-cols-2"></div>
+        <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+          <p class="text-xs uppercase tracking-[0.25em] text-brand-100">Footer</p>
+          <p id="footer-copy" contenteditable="true" data-placeholder="Texte footer" class="editable editable-empty mt-3 text-sm leading-7 text-stone-300"></p>
+        </div>
+      </div>
+
+      <div class="grid gap-6 xl:grid-cols-2">
+        <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+          <div id="privacy-eyebrow" contenteditable="true" data-placeholder="Eyebrow confidentialite" class="editable editable-empty text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+          <h2 id="privacy-title" contenteditable="true" data-placeholder="Titre confidentialite" class="editable editable-empty mt-4 font-display text-4xl font-bold text-white"></h2>
+          <p id="privacy-description" contenteditable="true" data-placeholder="Description confidentialite" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+          <div class="mt-8 flex items-center justify-between">
+            <h3 class="font-display text-xl font-bold text-white">Sections confidentialite</h3>
+            <button id="add-privacy-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+          </div>
+          <div id="privacy-list" class="mt-4 grid gap-4"></div>
+        </div>
+
+        <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+          <div id="terms-eyebrow" contenteditable="true" data-placeholder="Eyebrow conditions" class="editable editable-empty text-xs font-bold uppercase tracking-[0.35em] text-brand-100"></div>
+          <h2 id="terms-title" contenteditable="true" data-placeholder="Titre conditions" class="editable editable-empty mt-4 font-display text-4xl font-bold text-white"></h2>
+          <p id="terms-description" contenteditable="true" data-placeholder="Description conditions" class="editable editable-empty mt-4 text-base leading-8 text-stone-300"></p>
+          <div class="mt-8 flex items-center justify-between">
+            <h3 class="font-display text-xl font-bold text-white">Sections conditions</h3>
+            <button id="add-terms-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+          </div>
+          <div id="terms-list" class="mt-4 grid gap-4"></div>
+        </div>
+      </div>
+
+      <div class="grid gap-6 xl:grid-cols-2">
+        <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display text-xl font-bold text-white">Liens footer principaux</h3>
+            <button id="add-footer-primary-link-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+          </div>
+          <div id="footer-primary-links-list" class="mt-4 grid gap-4"></div>
+        </div>
+        <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+          <div class="flex items-center justify-between">
+            <h3 class="font-display text-xl font-bold text-white">Liens footer legaux</h3>
+            <button id="add-footer-legal-link-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white">Ajouter</button>
+          </div>
+          <div id="footer-legal-links-list" class="mt-4 grid gap-4"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/site-admin.js?v=20260803-1"></script>
+  <script>
+    const isFileMode = window.location.protocol === "file:";
+    const adminBaseUrl = isFileMode ? siteAdmin.getBackendBaseUrl() : "";
+    const resolveAdminHref = (path) => isFileMode ? `${adminBaseUrl}${path}` : path;
+
+    document.getElementById("content-pages-dashboard-link").href = resolveAdminHref("/static/admin/dashboard.html");
+
+    siteAdmin.requireAuth(resolveAdminHref("/static/admin/login.html"));
+    siteAdmin.mountEditableBase();
+    siteAdmin.mountContentPagesEditor();
+  </script>
+</body>
+</html>

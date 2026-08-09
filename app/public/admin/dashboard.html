@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Tangawisa | Tableau de bord</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { brand: { 100: "#ffedd5", 300: "#fdba74", 500: "#f97316", 600: "#ea580c" } },
+          fontFamily: { display: ["Space Grotesk", "sans-serif"], body: ["Manrope", "sans-serif"] }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-stone-950 font-body text-stone-100" style="background-image:radial-gradient(circle at top right, rgba(249,115,22,.16), transparent 26%), radial-gradient(circle at left, rgba(255,255,255,.05), transparent 18%)">
+  <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+    <header class="mb-6 rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur-xl">
+      <div class="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-brand-100">Back-office Tangawisa</p>
+          <h1 class="mt-3 font-display text-3xl font-bold text-white sm:text-4xl">Tableau de bord admin du site</h1>
+          <p id="welcome-text" class="mt-3 text-sm leading-7 text-stone-300">Chargement de la session...</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a id="public-site-link" href="/presentation/" target="_blank" rel="noreferrer" class="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-bold text-white">Voir le site public</a>
+          <button id="logout-button" type="button" class="inline-flex h-11 items-center justify-center rounded-full bg-brand-500 px-5 text-sm font-bold text-white">Se deconnecter</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+      <a id="dashboard-link-home" href="/static/admin/content-home.html" class="rounded-[2rem] border border-white/10 bg-white/5 p-6 transition hover:-translate-y-1 hover:bg-white/10">
+        <p class="text-sm uppercase tracking-[0.25em] text-brand-100">01</p>
+        <h2 class="mt-4 font-display text-2xl font-bold text-white">Accueil et telechargement</h2>
+        <p class="mt-3 text-sm leading-7 text-stone-300">Hero, CTA, statistiques, telechargement et derniere version.</p>
+      </a>
+      <a id="dashboard-link-pages" href="/static/admin/content-pages.html" class="rounded-[2rem] border border-white/10 bg-white/5 p-6 transition hover:-translate-y-1 hover:bg-white/10">
+        <p class="text-sm uppercase tracking-[0.25em] text-brand-100">02</p>
+        <h2 class="mt-4 font-display text-2xl font-bold text-white">Pages de contenu</h2>
+        <p class="mt-3 text-sm leading-7 text-stone-300">Fonctionnalites, captures, FAQ, contact et nouveautés.</p>
+      </a>
+      <a id="dashboard-link-media" href="/static/admin/media-library.html" class="rounded-[2rem] border border-white/10 bg-white/5 p-6 transition hover:-translate-y-1 hover:bg-white/10">
+        <p class="text-sm uppercase tracking-[0.25em] text-brand-100">03</p>
+        <h2 class="mt-4 font-display text-2xl font-bold text-white">Bibliotheque media</h2>
+        <p class="mt-3 text-sm leading-7 text-stone-300">Upload d’images et récupération des URLs pour le site.</p>
+      </a>
+      <a id="dashboard-link-editor" href="/static/admin/site-presentation-editor.html" class="rounded-[2rem] border border-white/10 bg-gradient-to-br from-brand-500/20 to-white/5 p-6 transition hover:-translate-y-1 hover:bg-white/10">
+        <p class="text-sm uppercase tracking-[0.25em] text-brand-100">04</p>
+        <h2 class="mt-4 font-display text-2xl font-bold text-white">Replique editable</h2>
+        <p class="mt-3 text-sm leading-7 text-stone-300">Edition visuelle globale du site dans son rendu.</p>
+      </a>
+    </section>
+
+    <section class="mt-6 grid gap-5 xl:grid-cols-[1.2fr_0.8fr]">
+      <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+        <div class="flex items-center justify-between gap-4">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.35em] text-brand-100">Resume backend</p>
+            <h2 class="mt-3 font-display text-3xl font-bold text-white">Statistiques reelles du projet</h2>
+          </div>
+          <button id="refresh-summary-button" type="button" class="inline-flex h-11 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-bold text-white">Rafraichir</button>
+        </div>
+        <div id="summary-banner" class="mt-5 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-300">Chargement du resume...</div>
+        <div id="stats-grid" class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3"></div>
+      </div>
+
+      <div class="rounded-[2rem] border border-white/10 bg-white/5 p-6">
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-brand-100">Etat du site</p>
+        <h2 class="mt-3 font-display text-3xl font-bold text-white">Contenu public</h2>
+        <div id="site-summary" class="mt-6 grid gap-3"></div>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/site-admin.js?v=20260803-1"></script>
+  <script>
+    (() => {
+      const hash = window.location.hash.startsWith("#") ? window.location.hash.slice(1) : "";
+      const hashParams = new URLSearchParams(hash);
+      const accessToken = hashParams.get("access_token");
+      if (!accessToken) {
+        return;
+      }
+
+      localStorage.setItem("sitePresentationAdminToken", accessToken);
+      hashParams.delete("access_token");
+      const cleanHash = hashParams.toString();
+      const cleanUrl = `${window.location.pathname}${window.location.search}${cleanHash ? `#${cleanHash}` : ""}`;
+      window.history.replaceState({}, document.title, cleanUrl);
+    })();
+
+    const summaryBanner = document.getElementById("summary-banner");
+    const isFileMode = window.location.protocol === "file:";
+
+    const setSummaryBanner = (text, tone = "neutral") => {
+      summaryBanner.textContent = text;
+      summaryBanner.className = `mt-5 rounded-2xl border px-4 py-3 text-sm ${
+        tone === "success"
+          ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
+          : tone === "error"
+            ? "border-red-500/30 bg-red-500/10 text-red-200"
+            : "border-white/10 bg-black/20 text-stone-300"
+      }`;
+    };
+
+    const adminBaseUrl = isFileMode ? siteAdmin.getBackendBaseUrl() : "";
+    const resolveAdminHref = (path) => isFileMode ? `${adminBaseUrl}${path}` : path;
+
+    document.getElementById("public-site-link").href = resolveAdminHref("/presentation/");
+    document.getElementById("dashboard-link-home").href = resolveAdminHref("/static/admin/content-home.html");
+    document.getElementById("dashboard-link-pages").href = resolveAdminHref("/static/admin/content-pages.html");
+    document.getElementById("dashboard-link-media").href = resolveAdminHref("/static/admin/media-library.html");
+    document.getElementById("dashboard-link-editor").href = resolveAdminHref("/static/admin/site-presentation-editor.html");
+
+    const renderSummary = async () => {
+      try {
+        const summary = await siteAdmin.getSummary();
+        setSummaryBanner(`Source: ${summary.source}. Version courante: ${summary.current_version}.`, "success");
+
+        const stats = [
+          ["Utilisateurs", summary.stats.total_users],
+          ["Clients", summary.stats.total_clients],
+          ["Vendeurs", summary.stats.total_sellers],
+          ["Admin + support", summary.stats.total_admins_support],
+          ["Boutiques actives", summary.stats.active_shops],
+          ["Produits actifs", summary.stats.active_products],
+          ["Conversations", summary.stats.conversations],
+          ["Tickets ouverts", summary.stats.open_tickets],
+          ["Signalements ouverts", summary.stats.open_reports],
+          ["Images uploades", summary.stats.uploaded_images]
+        ];
+
+        document.getElementById("stats-grid").innerHTML = stats.map(([label, value]) => `
+          <div class="rounded-[1.5rem] border border-white/10 bg-black/20 p-4">
+            <p class="text-xs uppercase tracking-[0.25em] text-stone-400">${label}</p>
+            <p class="mt-3 font-display text-3xl font-bold text-white">${value}</p>
+          </div>
+        `).join("");
+
+        document.getElementById("site-summary").innerHTML = [
+          ["Application", summary.app_name],
+          ["Derniere version", summary.current_version],
+          ["Derniere mise a jour", summary.last_updated_at || "Non disponible"],
+          ["Stats hero", summary.content_blocks.hero_stats],
+          ["Fonctionnalites", summary.content_blocks.features],
+          ["Captures", summary.content_blocks.screenshots],
+          ["Articles", summary.content_blocks.updates],
+          ["FAQ", summary.content_blocks.faq_items],
+          ["Canaux contact", summary.content_blocks.contact_channels],
+          ["Blocs confidentialite", summary.content_blocks.privacy_sections],
+          ["Blocs conditions", summary.content_blocks.terms_sections]
+        ].map(([label, value]) => `
+          <div class="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
+            <p class="text-xs uppercase tracking-[0.25em] text-stone-400">${label}</p>
+            <p class="mt-2 text-sm font-semibold text-white">${value}</p>
+          </div>
+        `).join("");
+      } catch (error) {
+        setSummaryBanner(error.message, "error");
+      }
+    };
+
+    siteAdmin.requireAuth(resolveAdminHref("/static/admin/login.html"));
+    siteAdmin.getProfile().then((user) => {
+      document.getElementById("welcome-text").textContent = `Connecte en tant que ${user.full_name} (${user.role}).`;
+    }).catch((error) => {
+      setSummaryBanner(error.message, "error");
+    });
+    renderSummary();
+    document.getElementById("refresh-summary-button").addEventListener("click", renderSummary);
+    document.getElementById("logout-button").addEventListener("click", () => {
+      siteAdmin.logout();
+      window.location.href = resolveAdminHref("/static/admin/login.html");
+    });
+  </script>
+</body>
+</html>

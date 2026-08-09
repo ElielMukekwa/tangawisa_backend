@@ -1,0 +1,319 @@
+{
+  "app_name": "Tangawisa",
+  "hero": {
+    "badge": "Moderne. Rapide. Simple.",
+    "title": "Le site qui donne envie d'installer Tangawisa au premier regard.",
+    "description": "Une vitrine premium pour presenter l'application, rassurer les visiteurs et transformer l'interet en telechargement reel.",
+    "primary_cta_label": "Telecharger l'APK",
+    "primary_cta_href": "/presentation/download.html",
+    "secondary_cta_label": "Decouvrir les fonctionnalites",
+    "secondary_cta_href": "/presentation/features.html",
+    "preview_image_url": "/static/site-presentation/hero-phone.svg",
+    "preview_image_alt": "Apercu de l'application Tangawisa sur telephone",
+    "stats": [
+      {
+        "value": "12k+",
+        "label": "Utilisateurs actifs"
+      },
+      {
+        "value": "18k+",
+        "label": "Telechargements"
+      },
+      {
+        "value": "4.8/5",
+        "label": "Satisfaction moyenne"
+      }
+    ]
+  },
+  "features": {
+    "eyebrow": "Experience produit",
+    "title": "Des fonctionnalites qui parlent en quelques secondes.",
+    "description": "Cette page dediee met en valeur les avantages de l'application de facon plus claire qu'une simple liste compacte sur l'accueil."
+  },
+  "feature_items": [
+    {
+      "icon": "🔍",
+      "title": "Recherche rapide",
+      "description": "Une navigation fluide pour trouver une information utile sans friction ni temps perdu."
+    },
+    {
+      "icon": "❤️",
+      "title": "Favoris intelligents",
+      "description": "Les rubriques importantes restent accessibles en un geste pour accelerer l'usage quotidien."
+    },
+    {
+      "icon": "💬",
+      "title": "Chat integre",
+      "description": "Une communication plus simple et plus directe au sein de l'experience applicative."
+    },
+    {
+      "icon": "🔔",
+      "title": "Notifications utiles",
+      "description": "Les informations importantes arrivent au bon moment sans surcharger l'utilisateur."
+    },
+    {
+      "icon": "📍",
+      "title": "Geolocalisation",
+      "description": "L'application s'adapte mieux au contexte et renforce la pertinence des informations affichees."
+    },
+    {
+      "icon": "🛡️",
+      "title": "Securite des comptes",
+      "description": "La confiance reste visible jusque dans la presentation, avec un discours clair sur la protection des donnees."
+    }
+  ],
+  "screenshots": {
+    "eyebrow": "Galerie produit",
+    "title": "Des ecrans qui montrent tout de suite la qualite de l'app.",
+    "description": "Cette page est pensee pour accueillir de vraies captures avec une mise en scene plus premium que de simples miniatures alignees."
+  },
+  "screenshot_items": [
+    {
+      "title": "Accueil",
+      "description": "Un tableau de bord net et immediat pour donner envie de continuer.",
+      "image_url": "/static/site-presentation/screens/home.svg",
+      "image_alt": "Capture accueil Tangawisa"
+    },
+    {
+      "title": "Recherche",
+      "description": "Un ecran de recherche fait pour aller vite et garder l'utilisateur en confiance.",
+      "image_url": "/static/site-presentation/screens/search.svg",
+      "image_alt": "Capture recherche Tangawisa"
+    },
+    {
+      "title": "Details",
+      "description": "Les contenus importants sont lisibles, structures et bien hierarchises.",
+      "image_url": "/static/site-presentation/screens/details.svg",
+      "image_alt": "Capture details Tangawisa"
+    },
+    {
+      "title": "Profil",
+      "description": "Une zone personnelle epuree qui inspire la maitrise et la securite.",
+      "image_url": "/static/site-presentation/screens/profile.svg",
+      "image_alt": "Capture profil Tangawisa"
+    },
+    {
+      "title": "Parametres",
+      "description": "Des reglages simples pour montrer une application mature et bien pensee.",
+      "image_url": "/static/site-presentation/screens/settings.svg",
+      "image_alt": "Capture parametres Tangawisa"
+    }
+  ],
+  "download": {
+    "eyebrow": "Installer Tangawisa",
+    "title": "Telechargez l'APK en toute confiance.",
+    "description": "Tout le contenu de cette page peut etre pilote depuis le backend : version, lien APK, dates, tailles et historique.",
+    "steps": [
+      "Telechargez le fichier APK depuis le bouton principal.",
+      "Autorisez l'installation depuis une source inconnue si Android le demande.",
+      "Installez l'application et ouvrez-la une fois le processus termine.",
+      "Commencez a utiliser Tangawisa avec une interface simple et rapide."
+    ],
+    "latest_version": {
+      "version": "1.2.0",
+      "date": "01/08/2026",
+      "size": "28 Mo",
+      "android_min": "Android 8+",
+      "changes": "Corrections de bugs, meilleure fluidite et optimisation generale.",
+      "apk_url": "#"
+    },
+    "history": [
+      {
+        "version": "1.2.0",
+        "date": "01/08/2026",
+        "apk_url": "#"
+      },
+      {
+        "version": "1.1.0",
+        "date": "20/07/2026",
+        "apk_url": "#"
+      },
+      {
+        "version": "1.0.0",
+        "date": "05/07/2026",
+        "apk_url": "#"
+      }
+    ]
+  },
+  "updates": {
+    "eyebrow": "Journal de mise a jour",
+    "title": "Les nouveautes de Tangawisa",
+    "description": "Une page dediee pour raconter les evolutions du produit, rassurer les utilisateurs et valoriser le travail accompli sur chaque version.",
+    "posts": [
+      {
+        "version": "Version 1.2.0",
+        "date": "2026-08-01",
+        "title": "Performance et fluidite renforcees",
+        "summary": "Stabilisation generale, ressenti plus fluide et meilleure experience de navigation.",
+        "highlights": [
+          "Corrections de bugs",
+          "Chargement plus rapide",
+          "Confiance utilisateur renforcee"
+        ]
+      },
+      {
+        "version": "Version 1.1.0",
+        "date": "2026-07-20",
+        "title": "Interactions plus modernes",
+        "summary": "Meilleure ergonomie sur les principaux ecrans et experience plus stable au quotidien.",
+        "highlights": []
+      },
+      {
+        "version": "Version 1.0.0",
+        "date": "2026-07-05",
+        "title": "Lancement initial",
+        "summary": "Premiere mise en ligne de Tangawisa avec telechargement direct de l'APK et base fonctionnelle de l'application.",
+        "highlights": []
+      }
+    ]
+  },
+  "faq": {
+    "eyebrow": "Questions frequentes",
+    "title": "Les reponses qui aident a passer a l'installation.",
+    "description": "Une page dediee pour lever les hesitations et rendre le telechargement plus naturel.",
+    "items": [
+      {
+        "question": "L'application est-elle gratuite ?",
+        "answer": "Oui, Tangawisa peut etre telechargee gratuitement dans cette presentation."
+      },
+      {
+        "question": "Pourquoi l'application n'est-elle pas sur Play Store ?",
+        "answer": "Le choix APK permet une diffusion directe, plus rapide et plus simple a controler."
+      },
+      {
+        "question": "Mes donnees sont-elles securisees ?",
+        "answer": "La securite des comptes et la confidentialite sont presentees comme des priorites du projet."
+      },
+      {
+        "question": "Comment signaler un bug ?",
+        "answer": "Les visiteurs peuvent utiliser les canaux presents sur la page Contact pour remonter un probleme."
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Parlons ensemble",
+    "title": "Une page contact plus serieuse et plus engageante.",
+    "description": "Le visiteur trouve vite le bon canal sans se perdre, ce qui renforce la confiance avant et apres le telechargement.",
+    "channels": [
+      {
+        "name": "WhatsApp",
+        "label": "Message rapide",
+        "description": "Ideal pour une question courte ou une assistance immediate.",
+        "url": "https://wa.me/"
+      },
+      {
+        "name": "E-mail",
+        "label": "Contact officiel",
+        "description": "Pour les demandes detaillees, partenariats ou suivi plus formel.",
+        "url": "mailto:contact@tangawisa.app"
+      },
+      {
+        "name": "Facebook",
+        "label": "Presence sociale",
+        "description": "Utile pour la visibilite et les echanges avec la communaute.",
+        "url": "#"
+      },
+      {
+        "name": "Telegram",
+        "label": "Canal direct",
+        "description": "Pratique pour l'assistance, les annonces et les retours rapides.",
+        "url": "#"
+      }
+    ]
+  },
+  "privacy": {
+    "eyebrow": "Confidentialite",
+    "title": "Politique de confidentialite",
+    "description": "Cette page presente une base claire que vous pourrez adapter selon les donnees reelles traitees par Tangawisa.",
+    "sections": [
+      {
+        "title": "Collecte des donnees",
+        "body": "Tangawisa peut collecter uniquement les informations necessaires au bon fonctionnement de l'application et a l'amelioration du service."
+      },
+      {
+        "title": "Utilisation",
+        "body": "Les donnees sont utilisees pour permettre l'acces aux fonctionnalites, securiser les comptes et offrir une experience stable."
+      },
+      {
+        "title": "Protection",
+        "body": "Nous mettons en place des mesures raisonnables pour limiter les acces non autorises et proteger les informations personnelles."
+      },
+      {
+        "title": "Contact",
+        "body": "Pour toute question sur la confidentialite, utilisez les moyens de contact presentes sur la page Contact."
+      }
+    ]
+  },
+  "terms": {
+    "eyebrow": "Conditions",
+    "title": "Conditions d'utilisation",
+    "description": "Une base simple pour encadrer l'usage du site et de l'application en attendant votre texte juridique final.",
+    "sections": [
+      {
+        "title": "Acces au service",
+        "body": "L'acces a Tangawisa est propose tel quel, avec un effort constant pour assurer disponibilite, simplicite et fiabilite."
+      },
+      {
+        "title": "Utilisation responsable",
+        "body": "L'utilisateur s'engage a ne pas detourner l'application, a respecter les autres utilisateurs et a proteger ses identifiants."
+      },
+      {
+        "title": "Mises a jour",
+        "body": "Les versions peuvent evoluer pour ajouter des fonctionnalites, corriger des bugs ou renforcer la securite."
+      },
+      {
+        "title": "Support",
+        "body": "En cas de question ou de probleme, les canaux de contact du site permettent de joindre l'equipe du projet."
+      }
+    ]
+  },
+  "footer": {
+    "copyright": "Copyright 2026 Tangawisa. Tous droits reserves.",
+    "primary_links": [
+      {
+        "name": "Fonctionnalites",
+        "label": "Fonctionnalites",
+        "description": "",
+        "url": "features.html"
+      },
+      {
+        "name": "Captures",
+        "label": "Captures",
+        "description": "",
+        "url": "screenshots.html"
+      },
+      {
+        "name": "Telechargement",
+        "label": "Telechargement",
+        "description": "",
+        "url": "download.html"
+      },
+      {
+        "name": "FAQ",
+        "label": "FAQ",
+        "description": "",
+        "url": "faq.html"
+      },
+      {
+        "name": "Contact",
+        "label": "Contact",
+        "description": "",
+        "url": "contact.html"
+      }
+    ],
+    "legal_links": [
+      {
+        "name": "Confidentialite",
+        "label": "Confidentialite",
+        "description": "",
+        "url": "privacy.html"
+      },
+      {
+        "name": "Conditions",
+        "label": "Conditions",
+        "description": "",
+        "url": "terms.html"
+      }
+    ]
+  }
+}

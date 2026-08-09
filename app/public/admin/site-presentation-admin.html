@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Tangawisa | Site Presentation</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              100: "#ffedd5",
+              200: "#fed7aa",
+              400: "#fb923c",
+              500: "#f97316",
+              600: "#ea580c"
+            }
+          },
+          fontFamily: {
+            display: ["Space Grotesk", "sans-serif"],
+            body: ["Manrope", "sans-serif"]
+          },
+          boxShadow: {
+            glow: "0 24px 80px rgba(249, 115, 22, 0.2)"
+          }
+        }
+      }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-image:
+        radial-gradient(circle at top right, rgba(249, 115, 22, 0.16), transparent 28%),
+        radial-gradient(circle at left, rgba(255, 255, 255, 0.06), transparent 20%);
+    }
+
+    .panel {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(18px);
+    }
+
+    .field {
+      width: 100%;
+      border-radius: 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      background: rgba(12, 10, 9, 0.9);
+      color: white;
+      padding: 0.9rem 1rem;
+      outline: none;
+    }
+
+    .field:focus {
+      border-color: rgba(249, 115, 22, 0.7);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    }
+
+    .section-link.is-active {
+      background: rgba(249, 115, 22, 0.16);
+      color: white;
+      border-color: rgba(249, 115, 22, 0.22);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-stone-950 font-body text-stone-100">
+  <div class="mx-auto max-w-[1600px] px-4 py-4 sm:px-6 sm:py-6 xl:px-8">
+    <header class="panel mb-6 rounded-[2rem] p-5 shadow-glow sm:p-6">
+      <div class="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
+        <div class="max-w-4xl">
+          <div class="inline-flex rounded-full border border-brand-400/20 bg-brand-500/10 px-4 py-2 text-xs font-bold uppercase tracking-[0.35em] text-brand-100">
+            Administration du site
+          </div>
+          <h1 class="mt-4 font-display text-3xl font-bold text-white sm:text-4xl xl:text-5xl">
+            Controle total du contenu de Tangawisa
+          </h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-stone-300 sm:text-base">
+            Cette interface permet de gerer les versions, textes, visuels et blocs du site de presentation avec une experience plus confortable, plus claire et plus propre pour un administrateur.
+          </p>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-2 xl:w-[360px]">
+          <a href="/presentation/" class="inline-flex h-12 items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 text-sm font-bold text-white transition hover:bg-white/10">
+            Voir le site public
+          </a>
+          <button id="open-preview-button" type="button" class="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-5 text-sm font-bold text-white transition hover:bg-brand-400">
+            Ouvrir l'aperçu
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <section class="mb-6 grid gap-6 xl:grid-cols-[320px_minmax(0,1fr)]">
+      <aside class="panel rounded-[2rem] p-5 sm:p-6">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Session</p>
+            <h2 class="mt-2 font-display text-2xl font-bold text-white">Connexion admin</h2>
+          </div>
+          <div id="source-pill" class="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs font-semibold text-stone-300">
+            source inconnue
+          </div>
+        </div>
+
+        <div id="status-banner" class="mt-5 rounded-2xl border border-white/10 bg-black/20 px-4 py-3 text-sm text-stone-300">
+          Session non connectee.
+        </div>
+
+        <form id="login-form" class="mt-5 grid gap-4">
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-stone-200">E-mail</span>
+            <input id="login-email" type="email" class="field" placeholder="admin@tangawisa.app" required>
+          </label>
+          <label class="block">
+            <span class="mb-2 block text-sm font-semibold text-stone-200">Mot de passe</span>
+            <input id="login-password" type="password" class="field" placeholder="Votre mot de passe" required>
+          </label>
+          <div class="grid gap-3 pt-2">
+            <button type="submit" class="inline-flex h-12 items-center justify-center rounded-full bg-brand-500 px-6 text-sm font-bold text-white transition hover:bg-brand-400">
+              Se connecter
+            </button>
+            <button id="load-content-button" type="button" class="inline-flex h-12 items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 text-sm font-bold text-white transition hover:bg-white/10">
+              Charger le contenu
+            </button>
+            <button id="save-content-button" type="button" class="inline-flex h-12 items-center justify-center rounded-full border border-brand-500/20 bg-brand-500/10 px-6 text-sm font-bold text-brand-100 transition hover:bg-brand-500/20">
+              Enregistrer les modifications
+            </button>
+          </div>
+        </form>
+
+        <div class="mt-6 rounded-[1.5rem] border border-white/10 bg-black/20 p-4">
+          <h3 class="font-display text-lg font-bold text-white">Raccourcis</h3>
+          <div class="mt-4 grid gap-2 text-sm text-stone-300">
+            <button type="button" data-scroll-target="hero-section" class="section-link rounded-2xl border border-white/10 px-4 py-3 text-left transition hover:bg-white/10">Hero et stats</button>
+            <button type="button" data-scroll-target="features-section" class="section-link rounded-2xl border border-white/10 px-4 py-3 text-left transition hover:bg-white/10">Fonctionnalites</button>
+            <button type="button" data-scroll-target="screenshots-section" class="section-link rounded-2xl border border-white/10 px-4 py-3 text-left transition hover:bg-white/10">Captures</button>
+            <button type="button" data-scroll-target="download-section" class="section-link rounded-2xl border border-white/10 px-4 py-3 text-left transition hover:bg-white/10">Telechargement</button>
+            <button type="button" data-scroll-target="updates-section" class="section-link rounded-2xl border border-white/10 px-4 py-3 text-left transition hover:bg-white/10">Nouveautes</button>
+            <button type="button" data-scroll-target="faq-section" class="section-link rounded-2xl border border-white/10 px-4 py-3 text-left transition hover:bg-white/10">FAQ</button>
+            <button type="button" data-scroll-target="contact-section" class="section-link rounded-2xl border border-white/10 px-4 py-3 text-left transition hover:bg-white/10">Contact et footer</button>
+          </div>
+        </div>
+      </aside>
+
+      <div class="grid gap-6 2xl:grid-cols-[minmax(0,1fr)_420px]">
+        <form id="editor-form" class="grid gap-6">
+          <section id="hero-section" class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Section 01</p>
+                <h2 class="mt-2 font-display text-2xl font-bold text-white">Hero et statistiques</h2>
+              </div>
+              <span class="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-stone-300">Page d'accueil</span>
+            </div>
+            <div class="grid gap-4 lg:grid-cols-2">
+              <label><span class="mb-2 block text-sm font-semibold">Nom de l'application</span><input name="app_name" class="field"></label>
+              <label><span class="mb-2 block text-sm font-semibold">Badge</span><input name="hero.badge" class="field"></label>
+              <label class="lg:col-span-2"><span class="mb-2 block text-sm font-semibold">Titre</span><textarea name="hero.title" rows="2" class="field"></textarea></label>
+              <label class="lg:col-span-2"><span class="mb-2 block text-sm font-semibold">Description</span><textarea name="hero.description" rows="4" class="field"></textarea></label>
+              <label><span class="mb-2 block text-sm font-semibold">CTA principal</span><input name="hero.primary_cta_label" class="field"></label>
+              <label><span class="mb-2 block text-sm font-semibold">Lien principal</span><input name="hero.primary_cta_href" class="field"></label>
+              <label><span class="mb-2 block text-sm font-semibold">CTA secondaire</span><input name="hero.secondary_cta_label" class="field"></label>
+              <label><span class="mb-2 block text-sm font-semibold">Lien secondaire</span><input name="hero.secondary_cta_href" class="field"></label>
+              <label><span class="mb-2 block text-sm font-semibold">Image hero</span><input name="hero.preview_image_url" class="field"></label>
+              <label><span class="mb-2 block text-sm font-semibold">Alt image hero</span><input name="hero.preview_image_alt" class="field"></label>
+            </div>
+            <div class="mt-6">
+              <div class="mb-4 flex items-center justify-between gap-4">
+                <h3 class="font-display text-xl font-bold text-white">Statistiques hero</h3>
+                <button type="button" data-add-list-item="hero-stats" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                  Ajouter une statistique
+                </button>
+              </div>
+              <div id="hero-stats" class="grid gap-4"></div>
+            </div>
+          </section>
+
+          <section id="features-section" class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Section 02</p>
+                <h2 class="mt-2 font-display text-2xl font-bold text-white">Fonctionnalites</h2>
+              </div>
+            </div>
+            <div class="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+              <div class="grid gap-4">
+                <label><span class="mb-2 block text-sm font-semibold">Eyebrow</span><input name="features.eyebrow" class="field"></label>
+                <label><span class="mb-2 block text-sm font-semibold">Titre</span><textarea name="features.title" rows="2" class="field"></textarea></label>
+                <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea name="features.description" rows="4" class="field"></textarea></label>
+              </div>
+              <div>
+                <div class="mb-4 flex items-center justify-between gap-4">
+                  <h3 class="font-display text-xl font-bold text-white">Cartes fonctionnalites</h3>
+                  <button type="button" data-add-list-item="feature-items" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                    Ajouter une carte
+                  </button>
+                </div>
+                <div id="feature-items" class="grid gap-4"></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="screenshots-section" class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="mb-6">
+              <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Section 03</p>
+              <h2 class="mt-2 font-display text-2xl font-bold text-white">Captures d'ecran</h2>
+            </div>
+            <div class="grid gap-6 xl:grid-cols-[0.8fr_1.2fr]">
+              <div class="grid gap-4">
+                <label><span class="mb-2 block text-sm font-semibold">Eyebrow</span><input name="screenshots.eyebrow" class="field"></label>
+                <label><span class="mb-2 block text-sm font-semibold">Titre</span><textarea name="screenshots.title" rows="2" class="field"></textarea></label>
+                <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea name="screenshots.description" rows="4" class="field"></textarea></label>
+              </div>
+              <div>
+                <div class="mb-4 flex items-center justify-between gap-4">
+                  <h3 class="font-display text-xl font-bold text-white">Captures</h3>
+                  <button type="button" data-add-list-item="screenshot-items" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                    Ajouter une capture
+                  </button>
+                </div>
+                <div id="screenshot-items" class="grid gap-4"></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="download-section" class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="mb-6">
+              <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Section 04</p>
+              <h2 class="mt-2 font-display text-2xl font-bold text-white">Telechargement et versions</h2>
+            </div>
+            <div class="grid gap-6 2xl:grid-cols-[0.72fr_1.28fr]">
+              <div class="grid gap-4">
+                <label><span class="mb-2 block text-sm font-semibold">Eyebrow</span><input name="download.eyebrow" class="field"></label>
+                <label><span class="mb-2 block text-sm font-semibold">Titre</span><textarea name="download.title" rows="2" class="field"></textarea></label>
+                <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea name="download.description" rows="4" class="field"></textarea></label>
+              </div>
+              <div class="grid gap-6">
+                <div>
+                  <div class="mb-4 flex items-center justify-between gap-4">
+                    <h3 class="font-display text-xl font-bold text-white">Etapes d'installation</h3>
+                    <button type="button" data-add-list-item="download-steps" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                      Ajouter une etape
+                    </button>
+                  </div>
+                  <div id="download-steps" class="grid gap-4"></div>
+                </div>
+
+                <div class="rounded-[1.5rem] border border-white/10 bg-black/20 p-5">
+                  <h3 class="font-display text-xl font-bold text-white">Derniere version</h3>
+                  <div class="mt-4 grid gap-4 md:grid-cols-2">
+                    <label><span class="mb-2 block text-sm font-semibold">Version</span><input name="download.latest_version.version" class="field"></label>
+                    <label><span class="mb-2 block text-sm font-semibold">Date</span><input name="download.latest_version.date" class="field"></label>
+                    <label><span class="mb-2 block text-sm font-semibold">Taille</span><input name="download.latest_version.size" class="field"></label>
+                    <label><span class="mb-2 block text-sm font-semibold">Android minimum</span><input name="download.latest_version.android_min" class="field"></label>
+                    <label class="md:col-span-2"><span class="mb-2 block text-sm font-semibold">Lien APK</span><input name="download.latest_version.apk_url" class="field"></label>
+                    <label class="md:col-span-2"><span class="mb-2 block text-sm font-semibold">Nouveautes</span><textarea name="download.latest_version.changes" rows="4" class="field"></textarea></label>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="mb-4 flex items-center justify-between gap-4">
+                    <h3 class="font-display text-xl font-bold text-white">Historique des versions</h3>
+                    <button type="button" data-add-list-item="download-history" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                      Ajouter une version
+                    </button>
+                  </div>
+                  <div id="download-history" class="grid gap-4"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="updates-section" class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="mb-6">
+              <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Section 05</p>
+              <h2 class="mt-2 font-display text-2xl font-bold text-white">Nouveautes</h2>
+            </div>
+            <div class="grid gap-6 xl:grid-cols-[0.75fr_1.25fr]">
+              <div class="grid gap-4">
+                <label><span class="mb-2 block text-sm font-semibold">Eyebrow</span><input name="updates.eyebrow" class="field"></label>
+                <label><span class="mb-2 block text-sm font-semibold">Titre</span><textarea name="updates.title" rows="2" class="field"></textarea></label>
+                <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea name="updates.description" rows="4" class="field"></textarea></label>
+              </div>
+              <div>
+                <div class="mb-4 flex items-center justify-between gap-4">
+                  <h3 class="font-display text-xl font-bold text-white">Articles</h3>
+                  <button type="button" data-add-list-item="update-posts" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                    Ajouter un article
+                  </button>
+                </div>
+                <div id="update-posts" class="grid gap-4"></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="faq-section" class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="mb-6">
+              <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Section 06</p>
+              <h2 class="mt-2 font-display text-2xl font-bold text-white">FAQ</h2>
+            </div>
+            <div class="grid gap-6 xl:grid-cols-[0.75fr_1.25fr]">
+              <div class="grid gap-4">
+                <label><span class="mb-2 block text-sm font-semibold">Eyebrow</span><input name="faq.eyebrow" class="field"></label>
+                <label><span class="mb-2 block text-sm font-semibold">Titre</span><textarea name="faq.title" rows="2" class="field"></textarea></label>
+                <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea name="faq.description" rows="4" class="field"></textarea></label>
+              </div>
+              <div>
+                <div class="mb-4 flex items-center justify-between gap-4">
+                  <h3 class="font-display text-xl font-bold text-white">Questions / reponses</h3>
+                  <button type="button" data-add-list-item="faq-items" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                    Ajouter une question
+                  </button>
+                </div>
+                <div id="faq-items" class="grid gap-4"></div>
+              </div>
+            </div>
+          </section>
+
+          <section id="contact-section" class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="mb-6">
+              <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Section 07</p>
+              <h2 class="mt-2 font-display text-2xl font-bold text-white">Contact et footer</h2>
+            </div>
+            <div class="grid gap-6 xl:grid-cols-[0.75fr_1.25fr]">
+              <div class="grid gap-4">
+                <label><span class="mb-2 block text-sm font-semibold">Eyebrow</span><input name="contact.eyebrow" class="field"></label>
+                <label><span class="mb-2 block text-sm font-semibold">Titre</span><textarea name="contact.title" rows="2" class="field"></textarea></label>
+                <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea name="contact.description" rows="4" class="field"></textarea></label>
+                <label><span class="mb-2 block text-sm font-semibold">Copyright footer</span><input name="footer.copyright" class="field"></label>
+              </div>
+              <div>
+                <div class="mb-4 flex items-center justify-between gap-4">
+                  <h3 class="font-display text-xl font-bold text-white">Canaux de contact</h3>
+                  <button type="button" data-add-list-item="contact-channels" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                    Ajouter un canal
+                  </button>
+                </div>
+                <div id="contact-channels" class="grid gap-4"></div>
+              </div>
+            </div>
+          </section>
+        </form>
+
+        <aside class="grid gap-6">
+          <section class="panel rounded-[2rem] p-5 sm:p-6">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Apercu rapide</p>
+                <h2 class="mt-2 font-display text-2xl font-bold text-white">Hero en direct</h2>
+              </div>
+              <button id="refresh-preview-button" type="button" class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-bold text-white transition hover:bg-white/10">
+                Rafraichir
+              </button>
+            </div>
+            <div class="mt-5 overflow-hidden rounded-[1.8rem] border border-white/10 bg-stone-950">
+              <div class="bg-gradient-to-br from-brand-500 to-brand-400 px-5 py-6 text-white">
+                <p id="preview-badge" class="text-[11px] font-bold uppercase tracking-[0.35em] text-brand-100">Badge</p>
+                <h3 id="preview-title" class="mt-3 font-display text-2xl font-bold leading-tight">Titre du hero</h3>
+                <p id="preview-description" class="mt-3 text-sm leading-6 text-white/90">Description du hero</p>
+              </div>
+              <div class="grid gap-3 p-4">
+                <div id="preview-stats" class="grid gap-3"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel rounded-[2rem] p-5 sm:p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Resume contenu</p>
+            <h2 class="mt-2 font-display text-2xl font-bold text-white">Etat general</h2>
+            <div id="summary-grid" class="mt-5 grid gap-3"></div>
+          </section>
+
+          <section class="panel rounded-[2rem] p-5 sm:p-6">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-brand-200">Conseils</p>
+            <h2 class="mt-2 font-display text-2xl font-bold text-white">Bonnes pratiques</h2>
+            <div class="mt-5 grid gap-3 text-sm leading-7 text-stone-300">
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Utilise des titres courts et directs pour garder l'impact du hero sur mobile.</div>
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Garde une seule promesse forte par carte pour les fonctionnalites.</div>
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Mets de vraies images ou maquettes finales dans les captures pour renforcer la confiance.</div>
+              <div class="rounded-2xl border border-white/10 bg-black/20 p-4">Pour les versions, maintiens date, taille et lien APK coherents afin d'eviter la confusion.</div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const state = {
+      token: localStorage.getItem("sitePresentationAdminToken") || "",
+      content: null
+    };
+
+    const statusBanner = document.getElementById("status-banner");
+    const editorForm = document.getElementById("editor-form");
+    const sourcePill = document.getElementById("source-pill");
+
+    const listTemplates = {
+      "hero-stats": () => ({ value: "", label: "" }),
+      "feature-items": () => ({ icon: "", title: "", description: "" }),
+      "screenshot-items": () => ({ title: "", description: "", image_url: "", image_alt: "" }),
+      "download-steps": () => ({ value: "" }),
+      "download-history": () => ({ version: "", date: "", apk_url: "" }),
+      "update-posts": () => ({ version: "", date: "", title: "", summary: "", highlights: [""] }),
+      "faq-items": () => ({ question: "", answer: "" }),
+      "contact-channels": () => ({ name: "", label: "", description: "", url: "" })
+    };
+
+    const setStatus = (text, tone = "neutral") => {
+      statusBanner.textContent = text;
+      statusBanner.className = `mt-5 rounded-2xl border px-4 py-3 text-sm ${
+        tone === "success"
+          ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200"
+          : tone === "error"
+            ? "border-red-500/30 bg-red-500/10 text-red-200"
+            : "border-white/10 bg-black/20 text-stone-300"
+      }`;
+    };
+
+    const setSource = (text) => {
+      sourcePill.textContent = text || "source inconnue";
+    };
+
+    const authHeaders = () => ({
+      "Content-Type": "application/json",
+      ...(state.token ? { Authorization: `Bearer ${state.token}` } : {})
+    });
+
+    const deepSet = (target, path, value) => {
+      const keys = path.split(".");
+      let cursor = target;
+      keys.forEach((key, index) => {
+        if (index === keys.length - 1) {
+          cursor[key] = value;
+          return;
+        }
+
+        if (!(key in cursor)) {
+          cursor[key] = {};
+        }
+
+        cursor = cursor[key];
+      });
+    };
+
+    const fillFields = (content) => {
+      editorForm.querySelectorAll("[name]").forEach((field) => {
+        const path = field.name.split(".");
+        let value = content;
+        for (const key of path) {
+          value = value?.[key];
+        }
+        if (typeof value === "string") {
+          field.value = value;
+        }
+      });
+    };
+
+    const createCard = (title, innerHtml) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "rounded-[1.5rem] border border-white/10 bg-black/20 p-4";
+      wrapper.innerHTML = `
+        <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h4 class="font-display text-lg font-bold text-white">${title}</h4>
+          <button type="button" class="rounded-full border border-red-500/20 bg-red-500/10 px-3 py-2 text-xs font-bold text-red-200 transition hover:bg-red-500/20" data-remove-item>
+            Supprimer
+          </button>
+        </div>
+        <div class="grid gap-4">${innerHtml}</div>
+      `;
+      wrapper.querySelector("[data-remove-item]").addEventListener("click", () => {
+        wrapper.remove();
+        refreshPreview();
+      });
+      return wrapper;
+    };
+
+    const renderList = (containerId, items) => {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      items.forEach((item) => addListItem(containerId, item));
+    };
+
+    const addListItem = (containerId, values) => {
+      const container = document.getElementById(containerId);
+      let card;
+
+      if (containerId === "hero-stats") {
+        card = createCard("Statistique", `
+          <label><span class="mb-2 block text-sm font-semibold">Valeur</span><input data-key="value" class="field" value="${values.value || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Libelle</span><input data-key="label" class="field" value="${values.label || ""}"></label>
+        `);
+      } else if (containerId === "feature-items") {
+        card = createCard("Fonctionnalite", `
+          <label><span class="mb-2 block text-sm font-semibold">Icone</span><input data-key="icon" class="field" value="${values.icon || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Titre</span><input data-key="title" class="field" value="${values.title || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea data-key="description" rows="3" class="field">${values.description || ""}</textarea></label>
+        `);
+      } else if (containerId === "screenshot-items") {
+        card = createCard("Capture", `
+          <label><span class="mb-2 block text-sm font-semibold">Titre</span><input data-key="title" class="field" value="${values.title || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea data-key="description" rows="3" class="field">${values.description || ""}</textarea></label>
+          <label><span class="mb-2 block text-sm font-semibold">URL image</span><input data-key="image_url" class="field" value="${values.image_url || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Alt image</span><input data-key="image_alt" class="field" value="${values.image_alt || ""}"></label>
+        `);
+      } else if (containerId === "download-steps") {
+        card = createCard("Etape", `
+          <label><span class="mb-2 block text-sm font-semibold">Texte</span><textarea data-key="value" rows="3" class="field">${values.value || ""}</textarea></label>
+        `);
+      } else if (containerId === "download-history") {
+        card = createCard("Version", `
+          <label><span class="mb-2 block text-sm font-semibold">Version</span><input data-key="version" class="field" value="${values.version || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Date</span><input data-key="date" class="field" value="${values.date || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Lien APK</span><input data-key="apk_url" class="field" value="${values.apk_url || ""}"></label>
+        `);
+      } else if (containerId === "update-posts") {
+        card = createCard("Article", `
+          <label><span class="mb-2 block text-sm font-semibold">Version</span><input data-key="version" class="field" value="${values.version || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Date ISO</span><input data-key="date" class="field" value="${values.date || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Titre</span><input data-key="title" class="field" value="${values.title || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Resume</span><textarea data-key="summary" rows="3" class="field">${values.summary || ""}</textarea></label>
+          <label><span class="mb-2 block text-sm font-semibold">Highlights (une ligne par item)</span><textarea data-key="highlights" rows="4" class="field">${(values.highlights || []).join("\n")}</textarea></label>
+        `);
+      } else if (containerId === "faq-items") {
+        card = createCard("Question FAQ", `
+          <label><span class="mb-2 block text-sm font-semibold">Question</span><input data-key="question" class="field" value="${values.question || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Reponse</span><textarea data-key="answer" rows="3" class="field">${values.answer || ""}</textarea></label>
+        `);
+      } else if (containerId === "contact-channels") {
+        card = createCard("Canal", `
+          <label><span class="mb-2 block text-sm font-semibold">Nom</span><input data-key="name" class="field" value="${values.name || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Libelle</span><input data-key="label" class="field" value="${values.label || ""}"></label>
+          <label><span class="mb-2 block text-sm font-semibold">Description</span><textarea data-key="description" rows="3" class="field">${values.description || ""}</textarea></label>
+          <label><span class="mb-2 block text-sm font-semibold">URL</span><input data-key="url" class="field" value="${values.url || ""}"></label>
+        `);
+      }
+
+      if (card) {
+        card.querySelectorAll("input, textarea").forEach((field) => {
+          field.addEventListener("input", refreshPreview);
+        });
+        container.appendChild(card);
+      }
+    };
+
+    const collectList = (containerId) => {
+      const container = document.getElementById(containerId);
+      return [...container.children].map((card) => {
+        const values = {};
+        card.querySelectorAll("[data-key]").forEach((field) => {
+          if (field.dataset.key === "highlights") {
+            values[field.dataset.key] = field.value.split("\n").map((item) => item.trim()).filter(Boolean);
+          } else {
+            values[field.dataset.key] = field.value.trim();
+          }
+        });
+        return values;
+      });
+    };
+
+    const buildPayload = () => {
+      const payload = {};
+      editorForm.querySelectorAll("[name]").forEach((field) => {
+        deepSet(payload, field.name, field.value.trim());
+      });
+
+      payload.hero.stats = collectList("hero-stats");
+      payload.feature_items = collectList("feature-items");
+      payload.screenshot_items = collectList("screenshot-items");
+      payload.download.steps = collectList("download-steps").map((item) => item.value);
+      payload.download.history = collectList("download-history");
+      payload.updates.posts = collectList("update-posts");
+      payload.faq.items = collectList("faq-items");
+      payload.contact.channels = collectList("contact-channels");
+      return payload;
+    };
+
+    const updateSummary = (payload) => {
+      const summaryGrid = document.getElementById("summary-grid");
+      const blocks = [
+        { label: "Stats hero", value: payload.hero.stats.length },
+        { label: "Fonctionnalites", value: payload.feature_items.length },
+        { label: "Captures", value: payload.screenshot_items.length },
+        { label: "Etapes download", value: payload.download.steps.length },
+        { label: "Versions historiques", value: payload.download.history.length },
+        { label: "Articles", value: payload.updates.posts.length },
+        { label: "Questions FAQ", value: payload.faq.items.length },
+        { label: "Canaux contact", value: payload.contact.channels.length }
+      ];
+
+      summaryGrid.innerHTML = blocks.map((block) => `
+        <div class="rounded-2xl border border-white/10 bg-black/20 px-4 py-4">
+          <p class="text-xs uppercase tracking-[0.25em] text-stone-400">${block.label}</p>
+          <p class="mt-2 font-display text-2xl font-bold text-white">${block.value}</p>
+        </div>
+      `).join("");
+    };
+
+    const refreshPreview = () => {
+      const payload = buildPayload();
+      document.getElementById("preview-badge").textContent = payload.hero.badge || "Badge";
+      document.getElementById("preview-title").textContent = payload.hero.title || "Titre du hero";
+      document.getElementById("preview-description").textContent = payload.hero.description || "Description du hero";
+
+      document.getElementById("preview-stats").innerHTML = payload.hero.stats.map((item) => `
+        <div class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+          <p class="font-display text-xl font-bold text-white">${item.value || "--"}</p>
+          <p class="mt-1 text-xs uppercase tracking-[0.2em] text-stone-400">${item.label || "Libelle"}</p>
+        </div>
+      `).join("");
+
+      updateSummary(payload);
+    };
+
+    const renderEditor = (content) => {
+      state.content = content;
+      fillFields(content);
+      renderList("hero-stats", content.hero.stats);
+      renderList("feature-items", content.feature_items);
+      renderList("screenshot-items", content.screenshot_items);
+      renderList("download-steps", content.download.steps.map((value) => ({ value })));
+      renderList("download-history", content.download.history);
+      renderList("update-posts", content.updates.posts);
+      renderList("faq-items", content.faq.items);
+      renderList("contact-channels", content.contact.channels);
+      refreshPreview();
+    };
+
+    const loadContent = async () => {
+      const response = await fetch("/api/v1/site-presentation/admin/content", {
+        headers: authHeaders()
+      });
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(body.detail || "Impossible de charger le contenu.");
+      }
+
+      const data = await response.json();
+      renderEditor(data.content);
+      setSource(data.source);
+      setStatus(`Contenu charge avec succes. Source: ${data.source}.`, "success");
+    };
+
+    document.getElementById("login-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      try {
+        const response = await fetch("/api/v1/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: document.getElementById("login-email").value,
+            password: document.getElementById("login-password").value
+          })
+        });
+
+        if (!response.ok) {
+          const body = await response.json().catch(() => ({}));
+          throw new Error(body.detail || "Connexion impossible.");
+        }
+
+        const data = await response.json();
+        state.token = data.access_token;
+        localStorage.setItem("sitePresentationAdminToken", state.token);
+        setStatus(`Connecte en tant que ${data.user.full_name} (${data.user.role}).`, "success");
+        await loadContent();
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    });
+
+    document.getElementById("load-content-button").addEventListener("click", async () => {
+      try {
+        await loadContent();
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    });
+
+    document.getElementById("save-content-button").addEventListener("click", async () => {
+      try {
+        const response = await fetch("/api/v1/site-presentation/admin/content", {
+          method: "PUT",
+          headers: authHeaders(),
+          body: JSON.stringify(buildPayload())
+        });
+
+        if (!response.ok) {
+          const body = await response.json().catch(() => ({}));
+          throw new Error(body.detail || "Enregistrement impossible.");
+        }
+
+        const data = await response.json();
+        renderEditor(data.content);
+        setSource(data.source);
+        setStatus("Contenu enregistre dans la base avec succes.", "success");
+      } catch (error) {
+        setStatus(error.message, "error");
+      }
+    });
+
+    document.querySelectorAll("[data-add-list-item]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.dataset.addListItem;
+        addListItem(targetId, listTemplates[targetId]());
+        refreshPreview();
+      });
+    });
+
+    document.querySelectorAll("[data-scroll-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.dataset.scrollTarget;
+        document.querySelectorAll(".section-link").forEach((item) => item.classList.remove("is-active"));
+        button.classList.add("is-active");
+        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    editorForm.querySelectorAll("input, textarea").forEach((field) => {
+      field.addEventListener("input", refreshPreview);
+    });
+
+    document.getElementById("refresh-preview-button").addEventListener("click", refreshPreview);
+    document.getElementById("open-preview-button").addEventListener("click", () => {
+      window.open("/presentation/", "_blank", "noopener,noreferrer");
+    });
+
+    if (state.token) {
+      setStatus("Session locale detectee. Chargez le contenu pour continuer.");
+    }
+
+    refreshPreview();
+  </script>
+</body>
+</html>

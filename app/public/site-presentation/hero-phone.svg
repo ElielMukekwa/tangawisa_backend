@@ -1,0 +1,29 @@
+<svg width="540" height="760" viewBox="0 0 540 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="540" height="760" rx="48" fill="#1C1917"/>
+  <rect x="26" y="26" width="488" height="708" rx="36" fill="url(#paint0_linear)"/>
+  <rect x="186" y="42" width="168" height="20" rx="10" fill="#0C0A09"/>
+  <rect x="62" y="110" width="416" height="172" rx="28" fill="url(#paint1_linear)"/>
+  <text x="94" y="158" fill="#FFEDD5" font-size="18" font-family="Arial" font-weight="700">Bienvenue</text>
+  <text x="94" y="206" fill="white" font-size="42" font-family="Arial" font-weight="700">Tangawisa</text>
+  <text x="94" y="246" fill="#FFEDD5" font-size="20" font-family="Arial">Rapide, clair et rassurant.</text>
+  <rect x="62" y="318" width="198" height="118" rx="24" fill="white"/>
+  <rect x="280" y="318" width="198" height="118" rx="24" fill="#1C1917"/>
+  <text x="92" y="366" fill="#1C1917" font-size="28" font-family="Arial" font-weight="700">Recherche</text>
+  <text x="92" y="398" fill="#78716C" font-size="16" font-family="Arial">Resultats instantanes</text>
+  <text x="314" y="366" fill="white" font-size="28" font-family="Arial" font-weight="700">Alertes</text>
+  <text x="314" y="398" fill="#D6D3D1" font-size="16" font-family="Arial">Notifications utiles</text>
+  <rect x="62" y="464" width="416" height="88" rx="24" fill="white"/>
+  <rect x="62" y="576" width="416" height="88" rx="24" fill="white"/>
+  <text x="94" y="516" fill="#1C1917" font-size="24" font-family="Arial" font-weight="700">Favoris et acces rapide</text>
+  <text x="94" y="628" fill="#1C1917" font-size="24" font-family="Arial" font-weight="700">Compte securise et interface fluide</text>
+  <defs>
+    <linearGradient id="paint0_linear" x1="270" y1="26" x2="270" y2="734" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF7ED"/>
+      <stop offset="1" stop-color="#F5F5F4"/>
+    </linearGradient>
+    <linearGradient id="paint1_linear" x1="62" y1="110" x2="478" y2="282" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F97316"/>
+      <stop offset="1" stop-color="#FDBA74"/>
+    </linearGradient>
+  </defs>
+</svg>
