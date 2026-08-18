@@ -2,7 +2,7 @@ from functools import lru_cache
 import json
 from pathlib import Path
 
-from pydantic import AliasChoices, Field
+from pydantic import AliasChoices, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -56,6 +56,15 @@ class Settings(BaseSettings):
     @property
     def cors_origins(self) -> list[str]:
         return _parse_cors_origins(self.cors_origins_raw)
+
+    @field_validator("access_token_expire_minutes", mode="before")
+    @classmethod
+    def use_default_token_expiration_when_empty(cls, value: object) -> object:
+        if value is None:
+            return 60
+        if isinstance(value, str) and not value.strip():
+            return 60
+        return value
 
 
 @lru_cache
