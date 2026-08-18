@@ -57,6 +57,15 @@ class Settings(BaseSettings):
     def cors_origins(self) -> list[str]:
         return _parse_cors_origins(self.cors_origins_raw)
 
+    @field_validator("database_url", mode="before")
+    @classmethod
+    def use_default_database_url_when_empty(cls, value: object) -> object:
+        if value is None:
+            return _DEFAULT_DATABASE_URL
+        if isinstance(value, str) and not value.strip():
+            return _DEFAULT_DATABASE_URL
+        return value
+
     @field_validator("access_token_expire_minutes", mode="before")
     @classmethod
     def use_default_token_expiration_when_empty(cls, value: object) -> object:
