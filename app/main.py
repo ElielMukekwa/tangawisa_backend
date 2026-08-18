@@ -65,10 +65,12 @@ def create_application() -> FastAPI:
     if presentation_dir.exists():
         app.mount("/presentation", StaticFiles(directory=presentation_dir, html=True), name="presentation")
 
-    Base.metadata.create_all(bind=engine)
-    apply_local_schema_upgrades(engine)
-    with SessionLocal() as db:
-        seed_development_data(db)
+    if settings.bootstrap_database:
+        Base.metadata.create_all(bind=engine)
+        apply_local_schema_upgrades(engine)
+        if settings.should_seed_development_data:
+            with SessionLocal() as db:
+                seed_development_data(db)
 
     return app
 
