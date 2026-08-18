@@ -57,6 +57,15 @@ class Settings(BaseSettings):
     def cors_origins(self) -> list[str]:
         return _parse_cors_origins(self.cors_origins_raw)
 
+    @field_validator("app_name", mode="before")
+    @classmethod
+    def use_default_app_name_when_empty(cls, value: object) -> object:
+        if value is None:
+            return "Tangawisa API"
+        if isinstance(value, str) and not value.strip():
+            return "Tangawisa API"
+        return value
+
     @field_validator("database_url", mode="before")
     @classmethod
     def use_default_database_url_when_empty(cls, value: object) -> object:
