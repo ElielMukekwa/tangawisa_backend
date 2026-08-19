@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class HeroStat(BaseModel):
@@ -52,7 +52,7 @@ class UpdatePost(BaseModel):
     date: str
     title: str
     summary: str
-    highlights: list[str] = []
+    highlights: list[str] = Field(default_factory=list)
 
 
 class FaqItem(BaseModel):
@@ -93,8 +93,8 @@ class ContactSection(SharedSection):
 
 class FooterContent(BaseModel):
     copyright: str
-    primary_links: list[ContactChannel] = []
-    legal_links: list[ContactChannel] = []
+    primary_links: list[ContactChannel] = Field(default_factory=list)
+    legal_links: list[ContactChannel] = Field(default_factory=list)
 
 
 class LegalSectionItem(BaseModel):

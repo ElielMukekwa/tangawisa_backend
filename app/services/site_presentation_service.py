@@ -19,16 +19,13 @@ from app.schemas.site_presentation import (
     SitePresentationPublicSummaryResponse,
     SitePresentationSummaryStats,
 )
+from app.services.media_storage_service import get_media_storage
 
 SITE_PRESENTATION_KEY = "site_presentation"
 
 
 def _content_path() -> Path:
     return Path(__file__).resolve().parents[1] / "content" / "site_presentation.json"
-
-
-def get_site_presentation_uploads_dir() -> Path:
-    return Path(__file__).resolve().parents[1] / "public" / "uploads" / "site-presentation"
 
 
 def load_default_site_presentation_payload() -> dict:
@@ -80,24 +77,7 @@ def update_site_presentation_content(
 
 
 def list_site_presentation_media_items() -> list[SitePresentationMediaItem]:
-    uploads_dir = get_site_presentation_uploads_dir()
-    if not uploads_dir.exists():
-        return []
-
-    items: list[SitePresentationMediaItem] = []
-    files = [path for path in uploads_dir.iterdir() if path.is_file()]
-    for file_path in sorted(files, key=lambda path: path.stat().st_mtime, reverse=True):
-        stat = file_path.stat()
-        items.append(
-            SitePresentationMediaItem(
-                filename=file_path.name,
-                url=f"/static/uploads/site-presentation/{file_path.name}",
-                size_bytes=stat.st_size,
-                created_at=str(int(stat.st_mtime)),
-            )
-        )
-
-    return items
+    return get_media_storage().list_items()
 
 
 def get_site_presentation_summary(db: Session) -> SitePresentationAdminSummaryResponse:

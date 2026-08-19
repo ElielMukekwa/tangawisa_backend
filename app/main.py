@@ -4,10 +4,12 @@ from pathlib import Path
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from sqlalchemy import text
+from sqlalchemy.exc import SQLAlchemyError
 
 from app.api.router import api_router
 from app.core.config import settings
@@ -45,9 +47,26 @@ def create_application() -> FastAPI:
     def healthcheck() -> dict[str, str]:
         return {"status": "ok", "service": settings.app_name}
 
+    @app.get("/health/ready", tags=["health"])
+    def readiness_check() -> dict[str, str]:
+        try:
+            with engine.connect() as connection:
+                connection.execute(text("select 1"))
+        except SQLAlchemyError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail="Base de donnees indisponible.",
+            ) from exc
+        return {
+            "status": "ready",
+            "service": settings.app_name,
+            "database": engine.dialect.name,
+        }
+
     @app.get("/", include_in_schema=False)
     def presentation_home() -> RedirectResponse:
-        return RedirectResponse(url="/presentation/")
+        destination = "/presentation/" if presentation_dir.exists() else "/docs"
+        return RedirectResponse(url=destination)
 
     @app.get("/admin", include_in_schema=False)
     def admin_home() -> RedirectResponse:

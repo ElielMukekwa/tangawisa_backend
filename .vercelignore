@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+*.db
+**/__pycache__/**
+**/*.pyc
+tests/**
+scripts/**
+app/public/admin/react-app/node_modules/**

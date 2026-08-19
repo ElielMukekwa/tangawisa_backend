@@ -27,6 +27,9 @@ class LocalIntegrationSmokeTest(unittest.TestCase):
 
     def test_public_surfaces_and_catalog(self) -> None:
         self.assertEqual(self.client.get("/health").status_code, 200)
+        readiness = self.client.get("/health/ready")
+        self.assertEqual(readiness.status_code, 200, readiness.text)
+        self.assertEqual(readiness.json()["database"], "sqlite")
         self.assertEqual(self.client.get("/presentation/").status_code, 200)
         self.assertEqual(self.client.get("/static/admin/login.html").status_code, 200)
         self.assertEqual(self.client.get("/api/v1/marketplace/catalog").status_code, 200)

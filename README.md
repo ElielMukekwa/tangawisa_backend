@@ -1,28 +1,66 @@
-Socle backend FastAPI pour Tangawisa.
+# Backend Tangawisa
 
-## Objectif de cette couche
+API FastAPI de la marketplace Tangawisa. Le backend conserve l’architecture existante :
 
-Cette premiere couche pose les fondations de production :
+- FastAPI pour les routes publiques, client, vendeur, support et administration ;
+- SQLAlchemy pour la persistance ;
+- JWT Tangawisa pour l’authentification ;
+- PostgreSQL Supabase en production ;
+- Supabase Storage pour les images administrées ;
+- Vercel Functions pour l’exécution du backend.
 
-- configuration centralisee,
-- connexion MySQL via SQLAlchemy,
-- structure modulaire FastAPI,
-- modeles de base Tangawisa,
-- endpoints systeme pour verification et brancheme
+> Le schéma scolaire MariaDB `ecole_gestion` ne correspond pas aux modèles de ce dépôt. Il ne doit pas être importé dans cette base Tangawisa : cela casserait les routes marketplace existantes.
 
-## Déploiement Vercel
+## Démarrage local
 
-Le backend expose une entrée serverless dans `api/index.py` et `vercel.json`
-redirige toutes les routes vers l'application FastAPI.
+Depuis `backend` :
 
-Variables à définir dans Vercel :
+```powershell
+Copy-Item .env.example .env
+python -m pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
 
-- `APP_ENV=production`
-- `DATABASE_URL=mysql+pymysql://user:password@host:3306/database`
-- `JWT_SECRET_KEY=<secret-long-et-unique>`
-- `CORS_ORIGINS=https://votre-front.vercel.app,https://votre-domaine.com`
-- `SEED_DEVELOPMENT_DATA=false`
+Vérifications :
 
-Sans `DATABASE_URL`, Vercel utilise une base SQLite temporaire dans `/tmp`.
-Elle permet de démarrer et tester `/health`, mais elle n'est pas persistante :
-pour un vrai système scolaire en production, utiliser une base externe MySQL.
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/health
+Invoke-RestMethod http://127.0.0.1:8000/health/ready
+Invoke-RestMethod http://127.0.0.1:8000/api/v1/system/info
+```
+
+Interfaces locales :
+
+- documentation API : `http://127.0.0.1:8000/docs` ;
+- présentation : `http://127.0.0.1:8000/presentation/` ;
+- administration HTML : `http://127.0.0.1:8000/admin`.
+
+## Tests
+
+```powershell
+python -m compileall -q app scripts tests
+python -m unittest discover -s tests -v
+```
+
+Test réel Supabase, après configuration de `DATABASE_URL` :
+
+```powershell
+python scripts/test_supabase_connection.py --auth-smoke
+```
+
+Le compte créé par le smoke test est supprimé automatiquement.
+
+## Production Vercel + Supabase
+
+Le guide complet est dans [DEPLOIEMENT_VERCEL_SUPABASE.md](DEPLOIEMENT_VERCEL_SUPABASE.md).
+
+Points obligatoires :
+
+- définir la racine Vercel sur `backend` ;
+- utiliser le pooler transactionnel Supabase, port `6543` ;
+- définir un `JWT_SECRET_KEY` aléatoire d’au moins 32 caractères ;
+- garder `BOOTSTRAP_DATABASE=false` et `SEED_DEVELOPMENT_DATA=false` ;
+- utiliser `MEDIA_STORAGE_BACKEND=supabase` ;
+- ne jamais committer `DATABASE_URL`, `SUPABASE_SECRET_KEY` ou `JWT_SECRET_KEY`.
+
+La production refuse volontairement de démarrer avec SQLite ou une clé JWT d’exemple. Cela évite un déploiement apparemment sain mais non persistant.

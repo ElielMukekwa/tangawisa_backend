@@ -1,4 +1,3 @@
-from pathlib import Path
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
@@ -20,12 +19,18 @@ from app.services.site_presentation_service import (
     get_site_presentation_content,
     get_site_presentation_public_summary,
     get_site_presentation_summary,
-    get_site_presentation_uploads_dir,
     list_site_presentation_media_items,
     update_site_presentation_content,
 )
+from app.services.media_storage_service import MediaStorageError, get_media_storage
 
 router = APIRouter()
+MAX_IMAGE_SIZE_BYTES = 10 * 1024 * 1024
+ALLOWED_IMAGE_TYPES = {
+    "image/jpeg": ".jpg",
+    "image/png": ".png",
+    "image/webp": ".webp",
+}
 
 
 @router.get("/content", response_model=SitePresentationContent)
@@ -63,7 +68,13 @@ def write_site_presentation_admin_content(
 def read_site_presentation_media_library(
     current_user: User = Depends(get_current_admin),
 ) -> SitePresentationMediaLibraryResponse:
-    return SitePresentationMediaLibraryResponse(items=list_site_presentation_media_items())
+    try:
+        return SitePresentationMediaLibraryResponse(items=list_site_presentation_media_items())
+    except MediaStorageError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=str(exc),
+        ) from exc
 
 
 @router.get("/admin/summary", response_model=SitePresentationAdminSummaryResponse)
@@ -83,32 +94,32 @@ async def upload_site_presentation_image(
     image: UploadFile = File(...),
     current_user: User = Depends(get_current_admin),
 ) -> SitePresentationImageUploadResponse:
-    if not image.content_type or not image.content_type.startswith("image/"):
+    content_type = (image.content_type or "").split(";", 1)[0].strip().lower()
+    suffix = ALLOWED_IMAGE_TYPES.get(content_type)
+    if suffix is None:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Le fichier doit etre une image.",
+            detail="Formats autorises: JPEG, PNG et WebP.",
         )
 
-    allowed_extensions = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"}
-    original_suffix = Path(image.filename or "").suffix.lower()
-    suffix = original_suffix if original_suffix in allowed_extensions else ".png"
-
-    uploads_dir = get_site_presentation_uploads_dir()
-    uploads_dir.mkdir(parents=True, exist_ok=True)
-
     filename = f"{uuid4().hex}{suffix}"
-    destination = uploads_dir / filename
-    content = await image.read()
+    content = await image.read(MAX_IMAGE_SIZE_BYTES + 1)
 
-    if len(content) > 10 * 1024 * 1024:
+    if len(content) > MAX_IMAGE_SIZE_BYTES:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="L'image depasse la taille maximale autorisee de 10 Mo.",
         )
 
-    destination.write_bytes(content)
+    try:
+        media_url = get_media_storage().upload(filename, content, content_type)
+    except MediaStorageError as exc:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail=str(exc),
+        ) from exc
 
     return SitePresentationImageUploadResponse(
         filename=filename,
-        url=f"/static/uploads/site-presentation/{filename}",
+        url=media_url,
     )

@@ -32,7 +32,11 @@ class AuthService:
 
     def login(self, payload: LoginRequest) -> TokenResponse | None:
         user = self.db.query(User).filter(User.email == payload.email).first()
-        if user is None or not verify_password(payload.password, user.hashed_password):
+        if (
+            user is None
+            or not user.is_active
+            or not verify_password(payload.password, user.hashed_password)
+        ):
             return None
         return self._build_token_response(user)
 
